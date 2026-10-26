@@ -26,8 +26,7 @@ h2{font-size:24px;margin:48px 0 12px}
 .demo{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;align-items:start}
 @media (max-width:760px){.demo{grid-template-columns:1fr}}
 .phone{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:12px;text-align:center}
-.phone iframe{width:100%;max-width:378px;height:800px;border:0;border-radius:12px}
-.phone .wait{padding:40px 16px;color:var(--mute)}
+.phone img{width:100%;max-width:300px;border-radius:12px;border:1px solid var(--line);display:block;margin:0 auto 14px}
 ol.steps{padding-left:20px;margin:0}ol.steps li{margin:0 0 8px}
 code{background:var(--acc2);padding:1px 5px;border-radius:4px;font-size:14px}
 .shots{display:flex;gap:14px;overflow-x:auto;padding:4px 2px 12px;scroll-snap-type:x mandatory}
@@ -56,11 +55,12 @@ a{color:var(--acc)}
 
 <h2 id="try">Try it in the browser</h2>
 <div class="demo">
-  <div class="phone" id="phone">
-    <div class="wait" id="wait">Loading the browser demo…</div>
+  <div class="phone">
+    <a href="https://appetize.io/app/b_zbrm4cfghxzbvuh2vlhktpyx6e" target="_blank" rel="noopener"><img src="shots/results.png" alt="Semester Results screen: a clash-free week timetable"></a>
+    <a class="btn p" href="https://appetize.io/app/b_zbrm4cfghxzbvuh2vlhktpyx6e" target="_blank" rel="noopener">▶ Launch Semester in your browser</a>
   </div>
   <div>
-    <p>This is the real release APK streamed from an Android device in the cloud (Appetize.io). Click the phone to start; a session lasts a few minutes.</p>
+    <p>This is the real release APK streamed from an Android device in the cloud (Appetize.io). The button opens it on appetize.io in a new tab: press play, wait a few seconds for the phone to boot, and use the mouse as your finger. Free sessions are short and may wait in a queue; reload to start again.</p>
     <ol class="steps">
       <li><b>Timetable → Courses:</b> tap <b>Try sample courses</b>. The demo schedule opens in the review screen; nothing is saved until you tap <b>Confirm and add courses</b>.</li>
       <li>Tap each course's <b>Choose</b> chip: mark <code>CS201</code> and <code>MA202</code> <b>Must take</b>, the rest <b>Want (ranked)</b>.</li>
@@ -110,17 +110,5 @@ a{color:var(--acc)}
 
 <footer>Semester · course project, October 2026 · <a href="https://github.com/Krishnag1729/semester-app">github.com/Krishnag1729/semester-app</a></footer>
 </main>
-<script>
-// Appetize public key of the uploaded release APK; empty until it is uploaded.
-const APPETIZE_KEY = "b_zbrm4cfghxzbvuh2vlhktpyx6e";
-const phone = document.getElementById("phone");
-if (APPETIZE_KEY) {
-  phone.innerHTML = `<iframe src="https://appetize.io/embed/${APPETIZE_KEY}?device=pixel7&scale=auto&centered=both&autoplay=false"
-    title="Semester running in the browser" allow="clipboard-write"></iframe>
-    <p style="margin:8px 0 0;font-size:14px"><a href="https://appetize.io/app/${APPETIZE_KEY}" target="_blank" rel="noopener">Open full screen</a></p>`;
-} else {
-  document.getElementById("wait").textContent = "The browser demo is being set up. Meanwhile, download the APK above.";
-}
-</script>
 </body>
 </html>
