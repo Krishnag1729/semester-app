@@ -112,10 +112,10 @@ a{color:var(--acc)}
 </main>
 <script>
 // Appetize public key of the uploaded release APK; empty until it is uploaded.
-const APPETIZE_KEY = "";
+const APPETIZE_KEY = "b_zbrm4cfghxzbvuh2vlhktpyx6e";
 const phone = document.getElementById("phone");
 if (APPETIZE_KEY) {
-  phone.innerHTML = `<iframe src="https://appetize.io/embed/${APPETIZE_KEY}?device=pixel7&osVersion=14.0&scale=auto&centered=both&autoplay=false"
+  phone.innerHTML = `<iframe src="https://appetize.io/embed/${APPETIZE_KEY}?device=pixel7&scale=auto&centered=both&autoplay=false"
     title="Semester running in the browser" allow="clipboard-write"></iframe>
     <p style="margin:8px 0 0;font-size:14px"><a href="https://appetize.io/app/${APPETIZE_KEY}" target="_blank" rel="noopener">Open full screen</a></p>`;
 } else {
