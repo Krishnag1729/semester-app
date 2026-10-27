@@ -30,9 +30,9 @@ h2{font-size:24px;margin:48px 0 12px}
 ol.steps{padding-left:20px;margin:0}ol.steps li{margin:0 0 8px}
 code{background:var(--acc2);padding:1px 5px;border-radius:4px;font-size:14px}
 .shots{display:flex;gap:14px;overflow-x:auto;padding:4px 2px 12px;scroll-snap-type:x mandatory}
-.shots figure{margin:0;flex:0 0 220px;scroll-snap-align:start}
-.shots img{width:220px;height:auto;border-radius:14px;border:1px solid var(--line);display:block}
-.shots figcaption{font-size:13px;color:var(--mute);margin-top:6px;text-align:center}
+.shots figure{margin:0;flex:0 0 150px;scroll-snap-align:start}
+.shots img{width:150px;height:auto;border-radius:14px;border:1px solid var(--line);display:block}
+.shots figcaption{font-size:12px;color:var(--mute);margin-top:6px;text-align:center}
 table{border-collapse:collapse;width:100%;font-size:15px}td,th{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
 th{color:var(--mute);font-weight:600}
 footer{margin-top:56px;color:var(--mute);font-size:14px;border-top:1px solid var(--line);padding-top:16px}
@@ -57,7 +57,6 @@ a{color:var(--acc)}
 <h2 id="try">Try it in the browser</h2>
 <div class="demo">
   <div class="phone">
-    <a href="https://appetize.io/app/b_zbrm4cfghxzbvuh2vlhktpyx6e" target="_blank" rel="noopener"><img src="shots/results.png" alt="Semester Results screen: a clash-free week timetable"></a>
     <a class="btn p" href="https://appetize.io/app/b_zbrm4cfghxzbvuh2vlhktpyx6e" target="_blank" rel="noopener">▶ Launch Semester in your browser</a>
   </div>
   <div>
@@ -72,17 +71,6 @@ a{color:var(--acc)}
     <p style="color:var(--mute);font-size:14px">App blocking, Do Not Disturb, alarms and calendar writing need permissions that a cloud device can't fully grant;
       they were tested on a real Galaxy M15 (Android 15).</p>
   </div>
-</div>
-
-<h2>Screens</h2>
-<div class="shots">
-  <figure><img src="shots/empty.png" alt="Empty course list with Add course, Import and Try sample courses" loading="lazy"><figcaption>Start: type, import or try the sample</figcaption></figure>
-  <figure><img src="shots/review.png" alt="Import review screen listing the parsed rows" loading="lazy"><figcaption>Every import is reviewed first</figcaption></figure>
-  <figure><img src="shots/choices.png" alt="Choices screen with MUST and ranked WANT courses" loading="lazy"><figcaption>MUST and ranked WANT</figcaption></figure>
-  <figure><img src="shots/results.png" alt="Results: option 1 timetable, 19 credits, 6 courses, clash-free week grid" loading="lazy"><figcaption>Top-3 clash-free timetables</figcaption></figure>
-  <figure><img src="shots/week.png" alt="Week grid of all course sections with overlaps" loading="lazy"><figcaption>All sections, overlaps shown</figcaption></figure>
-  <figure><img src="shots/focus.png" alt="Focus tab with setup checklist and focus session settings" loading="lazy"><figcaption>Focus: blocker, Pomodoro, class focus</figcaption></figure>
-  <figure><img src="shots/planner.png" alt="Planner day timeline with sleep, meals and free gaps" loading="lazy"><figcaption>Planner: the day as a timeline</figcaption></figure>
 </div>
 
 <h2>What it does</h2>
@@ -104,6 +92,17 @@ a{color:var(--acc)}
   <tr><th>Guarantees</th><td>No INTERNET permission (checked on every build) · parsed data used only after review · the app touches only its own calendar events and alarms</td></tr>
   <tr><th>Made with</th><td>Claude Code, over six sessions (22–26 Oct 2026). The full turn-by-turn conversation is in the <a href="transcript.html">build transcript</a>.</td></tr>
 </table>
+
+<h2>A few screens</h2>
+<div class="shots">
+  <figure><img src="shots/empty.png" alt="Empty course list with Add course, Import and Try sample courses" loading="lazy"><figcaption>Start: type, import or try the sample</figcaption></figure>
+  <figure><img src="shots/review.png" alt="Import review screen listing the parsed rows" loading="lazy"><figcaption>Every import is reviewed first</figcaption></figure>
+  <figure><img src="shots/choices.png" alt="Choices screen with MUST and ranked WANT courses" loading="lazy"><figcaption>MUST and ranked WANT</figcaption></figure>
+  <figure><img src="shots/results.png" alt="Results: option 1 timetable, 19 credits, 6 courses, clash-free week grid" loading="lazy"><figcaption>Top-3 clash-free timetables</figcaption></figure>
+  <figure><img src="shots/week.png" alt="Week grid of all course sections with overlaps" loading="lazy"><figcaption>All sections, overlaps shown</figcaption></figure>
+  <figure><img src="shots/focus.png" alt="Focus tab with setup checklist and focus session settings" loading="lazy"><figcaption>Focus: blocker, Pomodoro, class focus</figcaption></figure>
+  <figure><img src="shots/planner.png" alt="Planner day timeline with sleep, meals and free gaps" loading="lazy"><figcaption>Planner: the day as a timeline</figcaption></figure>
+</div>
 
 <h2>Install on a phone</h2>
 <p>Download <a href="https://github.com/Krishnag1729/semester-app/releases/latest/download/semester.apk">semester.apk</a> on an Android 8.0+ phone,

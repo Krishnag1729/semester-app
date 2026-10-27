@@ -12630,7 +12630,7 @@ Enter your answer
 
 Enter your answer
 6.Project 2 interview preparation HTML URL
-(1 Point)</div><details class=resp><summary>Response · 11 tool calls</summary><div class=rb><div class=tool><span class=tn>Bash</span> Read project status file<pre>cat Status.md</pre></div><details class='out'><summary>output</summary><pre># Status.md: Semester at a glance
+(1 Point)</div><details class=resp><summary>Response · 14 tool calls</summary><div class=rb><div class=tool><span class=tn>Bash</span> Read project status file<pre>cat Status.md</pre></div><details class='out'><summary>output</summary><pre># Status.md: Semester at a glance
 
 &gt; **Read this first in every new chat.** ≤ 90 lines. Updated at the end of every chat and with every commit that changes progress.
 &gt; Details: `SPEC.md` (requirements A/B/C/D/N, contracts §5–§9, roadmap §12), `Insights.md` (D-xx decisions, I-xx findings, log).
@@ -12821,7 +12821,28 @@ tail -3 Insights.md | cut -c1-120; grep -n &quot;I-25&quot; Insights.md | cut -c
 | 2026-10-27 | Appetize browser demo of the release APK linked from the public site (free plan blocks embeds). N11, I-24
 | 2026-10-27 | Interview-preparation page on the public site for the Project 2 form. N11, I-25. |
 352:**I-25: Interview-prep page (2026-10-27, 12:30).** The professor asked for t
-385:| 2026-10-27 | Interview-preparation page on the public site for the Project</pre></details></div></details></section>
+385:| 2026-10-27 | Interview-preparation page on the public site for the Project</pre></details><div class=md>Now I&#x27;ll publish the site; the script also rebuilds the transcript, which picks up this session.</div><div class=tool><span class=tn>Bash</span> Publish site to public GitHub Pages repo<pre>scripts/publish_site.sh &quot;Interview preparation page&quot; 2&gt;&amp;1 | tail -5</pre></div><details class='out'><summary>output</summary><pre>PASS N11_transcript /home/krishnag/Semester/site/transcript.html: 7 sessions, 44 turns, 1362 KB
+pushed → https://krishnag1729.github.io/semester-app/</pre></details><div class=tool><span class=tn>Bash</span> Wait for Pages deploy and check URLs<pre>for i in 1 2 3 4 5 6 7 8 9 10 11 12; do c=$(curl -s -o /dev/null -w &#x27;%{http_code}&#x27; https://krishnag1729.github.io/semester-app/interview.html); [ &quot;$c&quot; = 200 ] &amp;&amp; break; sleep 10; done; for u in &quot;&quot; transcript.html interview.html; do echo &quot;$(curl -s -o /dev/null -w &#x27;%{http_code}&#x27; https://krishnag1729.github.io/semester-app/$u) $u&quot;; done; curl -s https://krishnag1729.github.io/semester-app/interview.html | grep -o &quot;&lt;title&gt;.*&lt;/title&gt;&quot;</pre></div><details class='out'><summary>output</summary><pre>200 
+200 transcript.html
+200 interview.html
+&lt;title&gt;Semester Interview Prep&lt;/title&gt;</pre></details><div class=tool><span class=tn>Bash</span> Update Status.md and commit<pre>python3 - &lt;&lt;&#x27;EOF&#x27;
+p=&#x27;Status.md&#x27;;s=open(p).read()
+import re
+s=re.sub(r&#x27;\*\*Last updated:\*\*.*\n&#x27;,&#x27;**Last updated:** 2026-10-27 12:45 (interview-prep page added and published; all three Project 2 URLs live)\n&#x27;,s,1)
+s=s.replace(&#x27;| 14 | Course submission: public site, signed APK, Try sample courses, transcript (N11) | ✅ (I-24, Appetize live) |&#x27;,&#x27;| 14 | Course submission: public site, signed APK, Try sample courses, transcript, interview prep (N11) | ✅ (I-24, I-25) |&#x27;)
+s=s.replace(&quot;&quot;&quot;transcript .../transcript.html (6 sessions, 43 turns,
+  republished 2026-10-27 03:40).&quot;&quot;&quot;,&quot;&quot;&quot;transcript .../transcript.html (7 sessions, 44 turns), interview prep .../interview.html (I-25), all 200
+  on 2026-10-27 12:45.&quot;&quot;&quot;)
+open(p,&#x27;w&#x27;).write(s)
+EOF
+grep -n &quot;interview\|Last updated&quot; Status.md; wc -l Status.md
+git 
+… (161 more characters)</pre></div><details class='out'><summary>output</summary><pre>&lt;stdin&gt;:3: DeprecationWarning: &#x27;count&#x27; is passed as positional argument
+7:**Last updated:** 2026-10-27 12:45 (interview-prep page added and published; all three Project 2 URLs live)
+41:| 14 | Course submission: public site, signed APK, Try sample courses, transcript, interview prep (N11) | ✅ (I-24, I-25) |
+59:  https://appetize.io/app/b_zbrm4cfghxzbvuh2vlhktpyx6e, APK release v0.1.0), transcript .../transcript.html (7 sessions, 44 turns), interview prep .../interview.html (I-25), all 200
+89 Status.md
+6b578d1 I-25: interview-preparation page on the public site</pre></details><div class=md>Here are the three URLs for the form. All of them are live and return HTTP 200:<br><br><b>Project 2 deployed URL</b><pre>https://krishnag1729.github.io/semester-app/</pre><br><b>5. Project 2 chat transcript HTML URL</b><pre>https://krishnag1729.github.io/semester-app/transcript.html</pre><br><b>6. Project 2 interview preparation HTML URL</b><pre>https://krishnag1729.github.io/semester-app/interview.html</pre><br>The interview preparation page didn&#x27;t exist yet, so I wrote and published it just now. It&#x27;s on the same public site, and the site&#x27;s header now links to it. It has:<br>- a two-minute pitch<br>- a 4-minute demo route<br>- a set of numbers worth remembering (6 ms scheduler, 8.3 MB APK, 164 JVM + 52 instrumented tests, and others)<br>- about 30 likely questions, each with an answer you can open or close. They cover product and scope, architecture, the scheduler and planner algorithms, Android blocking and calendar, testing, what you did versus what Claude Code did, and limitations. A button opens all answers at once.<br><br>The answers come from the spec and the decision and test logs. Read it before the interview, especially the &quot;What did you do, and what did the AI do?&quot; answer, so it matches how you&#x27;d describe your own role.<br><br>Publishing also rebuilt the transcript page, so it now includes this session too (7 sessions, 44 turns). The spec, the logs and <code>Status.md</code> are updated and committed.</div></div></details></section>
 </main><script>
 const q=document.getElementById('q');q.addEventListener('input',()=>{const t=q.value.toLowerCase();
 document.querySelectorAll('.turn').forEach(e=>e.classList.toggle('hide',t&&!e.textContent.toLowerCase().includes(t)))});
