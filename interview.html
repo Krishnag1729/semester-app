@@ -151,23 +151,55 @@ a{color:var(--acc)}
     permission is granted.</p></div></details>
 
 <h2 id="algo">Algorithms</h2>
-<details><summary>How does the scheduler work?</summary><div>
-  <p>Each course has options: a single section, or a linked set of lecture, lab and tutorial sections that covers each required
-    kind exactly once. Each option becomes 7 day bitmasks of 5-minute slots (288 bits = 5 <code>Long</code>s), so the clash test
-    is a bitwise AND. The search places the MUST courses first, fewest options first, with backtracking. Then it does a
-    depth-first branch-and-bound over all chosen courses, where each WANT course is either placed or skipped with a reason. It
-    keeps the best K distinct timetables under a ranking key and returns only maximal timetables: a WANT course is skipped only
-    if it really cannot be added.</p></div></details>
+<details><summary>How does the scheduler work, step by step?</summary><div>
+  <p>In short, it is an exact search, not a heuristic and not AI: backtracking plus branch-and-bound, with bitmask clash tests. It
+    is guaranteed to find the best timetables under the ranking key unless the 3 s cap cuts it. Example input: MUST
+    <code>CS201</code> and <code>MA101</code>, WANT #1 <code>PH101</code>, WANT #2 <code>EE110</code>, WANT #3 <code>BIO1</code>.
+    Courses that weren't chosen are ignored.</p>
+  <ol>
+    <li><b>Options.</b> Each course becomes a list of ways to take it: a single section (<code>CS201-A</code>), or a linked
+      lecture + lab + tutorial set from one link group that covers each required kind exactly once
+      (<code>PH101-L1 + PH101-P2</code>). Options whose own meetings clash are dropped. A locked section keeps only the options
+      that contain it.</li>
+    <li><b>Bitmasks.</b> Each option becomes 7 day masks of 5-minute slots (288 bits = 5 <code>Long</code>s). Starts round down,
+      ends round up, and the walking buffer is added after each class. Two options clash exactly when their masks AND to
+      non-zero, which costs a few machine instructions with no time arithmetic.</li>
+    <li><b>MUSTs first.</b> If the MUST credits alone exceed the maximum, the result is <code>Infeasible</code> at once.
+      Otherwise the scheduler backtracks over the MUSTs only, starting with the course that has the fewest options ("fail
+      first"). If they can't all fit, it reduces them to a minimal conflicting set and explains it (see below).</li>
+    <li><b>Branch-and-bound.</b> Depth-first over all chosen courses in course-code order. Each course tries every option that
+      doesn't clash with what's already placed. A WANT also tries "skip", last. Credit limits are checked at every step. The
+      best K = 3 distinct timetables found so far are kept.</li>
+    <li><b>Maximal only, with reasons.</b> A finished timetable counts only if every skipped WANT really could not be added. Each
+      skip gets a sentence, e.g. "WANT 3 BIO1 skipped: clashes with CS201-A (Tue 09:00–11:30)" or "WANT 2 EE110 skipped: would
+      make 23 credits, over the 20 maximum". If the cap is hit, the best so far comes back flagged <code>partial</code>.</li>
+  </ol></div></details>
 <details><summary>What is the ranking key?</summary><div>
   <p>Compared in order:</p>
   <ol>
     <li>The set of WANT courses included, compared by rank, so including WANT #1 beats any combination without it.</li>
     <li>A soft penalty, lower is better: +10 per class before the earliest preferred time, +20 per class on a preferred free day,
-      +1 per 10 minutes of gap over the maximum, +5 per class during lunch.</li>
+      +1 per full 10 minutes of gap over the maximum, +5 per class during lunch.</li>
     <li>A tie-break by section IDs in course-code order, for determinism.</li>
   </ol></div></details>
+<details><summary>How does the pruning work?</summary><div>
+  <p>At any node of the search, the best case below it is "every undecided WANT gets in, and the penalty stays what it is now".
+    Penalties only ever grow as classes are added, so that is a true upper bound. If the current 3rd-best timetable is already
+    at least as good as that best case, the whole branch is cut. The search also visits branches in tie-break order, so a
+    branch that could only tie the 3rd best is cut too: anything below it would lose the tie-break anyway.</p></div></details>
+<details><summary>Why are WANT priorities strict instead of weighted?</summary><div>
+  <p>The WANT set is compared lexicographically by rank, so priorities don't add up like points. {#1} beats {#2, #3, #4, #5}, and
+    a timetable with WANT #1 and several 8 am classes beats a perfect one without it. Preferences only decide between
+    timetables with the same WANT set. This is the most predictable rule for a student ("I said this course mattered most"),
+    and it gives the bound above a simple form. It is recorded as decision D-14 (§7.4), so weighted priorities would be a spec
+    change, not a hidden tweak.</p></div></details>
+<details><summary>Why return only maximal timetables?</summary><div>
+  <p>Without this rule the top 3 could be "the best timetable", "the same minus BIO1" and "the same minus EE110". Those are
+    worse answers, not alternatives. So a timetable is kept only if every skipped WANT is impossible to add: every option
+    clashes, or it would go over the credit maximum. That also guarantees that every skip reason can name a real clash or a real
+    credit sum.</p></div></details>
 <details><summary>How do you explain an infeasible timetable?</summary><div>
-  <p>The scheduler finds a <b>minimal conflicting set</b> by deletion: it drops each MUST course in turn and keeps it out only if
+  <p>The scheduler finds a <b>minimal conflicting set</b> by deletion: it drops each MUST course in turn and leaves it out if
     the rest still fail. The output is a sentence such as "CS201 and MA101 can't both fit: CS201-A Mon 09:00–10:30 clashes with
     MA101-A Mon 10:00–11:00". For three or more courses it says "can't all fit together, though any two of them can". Credit
     limits get their own sentences.</p></div></details>

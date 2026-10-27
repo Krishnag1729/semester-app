@@ -20,7 +20,7 @@ details.out>summary{cursor:pointer;color:var(--mute);font-size:12.5px;margin-lef
 .hide{display:none}
 </style></head><body><main>
 <h1>Semester: build transcript</h1>
-<p class=sub>Claude Code sessions for the Semester Android app · 7 sessions · 44 turns · 22 Oct 2026 – 27 Oct 2026 (IST). Each turn is the user's prompt; click it to open Claude's response (text, tool calls and short tool output). Private reasoning and hidden system notes are not shown; emails and device identifiers are redacted.</p>
+<p class=sub>Claude Code sessions for the Semester Android app · 8 sessions · 46 turns · 22 Oct 2026 – 27 Oct 2026 (IST). Each turn is the user's prompt; click it to open Claude's response (text, tool calls and short tool output). Private reasoning and hidden system notes are not shown; emails and device identifiers are redacted.</p>
 <div class=bar><input id=q placeholder='Filter turns…' aria-label='Filter turns'><button id=ex>Expand all</button><button id=co>Collapse all</button></div><nav class=toc>
 <a href='#s1'>Session 1 · 22 Oct 15:26</a>
 <a href='#s2'>Session 2 · 23 Oct 01:20</a>
@@ -29,6 +29,7 @@ details.out>summary{cursor:pointer;color:var(--mute);font-size:12.5px;margin-lef
 <a href='#s5'>Session 5 · 26 Oct 11:48</a>
 <a href='#s6'>Session 6 · 26 Oct 22:47</a>
 <a href='#s7'>Session 7 · 27 Oct 12:28</a>
+<a href='#s8'>Session 8 · 27 Oct 14:47</a>
 </nav>
 <h2 id='s1'>Session 1 · Thu 22 Oct 2026, 15:26</h2>
 <section class=turn id='t1'><div class=th><b>Turn 1</b><span>22 Oct 15:26</span></div><div class=prompt>read SPEC.md and get started with App building.</div><details class=resp><summary>Response · 41 tool calls</summary><div class=rb><div class=tool><span class=tn>Bash</span> Read Status.md and list project files<pre>cat Status.md &amp;&amp; wc -l SPEC.md Insights.md PLAN.md &amp;&amp; ls -la</pre></div><details class='out'><summary>output</summary><pre># Status.md: Semester at a glance
@@ -12843,6 +12844,173 @@ git
 59:  https://appetize.io/app/b_zbrm4cfghxzbvuh2vlhktpyx6e, APK release v0.1.0), transcript .../transcript.html (7 sessions, 44 turns), interview prep .../interview.html (I-25), all 200
 89 Status.md
 6b578d1 I-25: interview-preparation page on the public site</pre></details><div class=md>Here are the three URLs for the form. All of them are live and return HTTP 200:<br><br><b>Project 2 deployed URL</b><pre>https://krishnag1729.github.io/semester-app/</pre><br><b>5. Project 2 chat transcript HTML URL</b><pre>https://krishnag1729.github.io/semester-app/transcript.html</pre><br><b>6. Project 2 interview preparation HTML URL</b><pre>https://krishnag1729.github.io/semester-app/interview.html</pre><br>The interview preparation page didn&#x27;t exist yet, so I wrote and published it just now. It&#x27;s on the same public site, and the site&#x27;s header now links to it. It has:<br>- a two-minute pitch<br>- a 4-minute demo route<br>- a set of numbers worth remembering (6 ms scheduler, 8.3 MB APK, 164 JVM + 52 instrumented tests, and others)<br>- about 30 likely questions, each with an answer you can open or close. They cover product and scope, architecture, the scheduler and planner algorithms, Android blocking and calendar, testing, what you did versus what Claude Code did, and limitations. A button opens all answers at once.<br><br>The answers come from the spec and the decision and test logs. Read it before the interview, especially the &quot;What did you do, and what did the AI do?&quot; answer, so it matches how you&#x27;d describe your own role.<br><br>Publishing also rebuilt the transcript page, so it now includes this session too (7 sessions, 44 turns). The spec, the logs and <code>Status.md</code> are updated and committed.</div></div></details></section>
+<h2 id='s8'>Session 8 · Tue 27 Oct 2026, 14:47</h2>
+<section class=turn id='t45'><div class=th><b>Turn 45</b><span>27 Oct 14:47</span></div><div class=prompt>what the algorithm was used. say I have a list of N courses and i have to make a timetable where I put some are must, some have priority 1 vs 2nd priority etc etc. how is it working?</div><details class=resp><summary>Response · 4 tool calls</summary><div class=rb><div class=tool><span class=tn>Bash</span> Read project status file and list files<pre>cat Status.md &amp;&amp; ls</pre></div><details class='out'><summary>output</summary><pre># Status.md: Semester at a glance
+
+&gt; **Read this first in every new chat.** ≤ 90 lines. Updated at the end of every chat and with every commit that changes progress.
+&gt; Details: `SPEC.md` (requirements A/B/C/D/N, contracts §5–§9, roadmap §12), `Insights.md` (D-xx decisions, I-xx findings, log).
+&gt; `PLAN.md` = original idea, never edited. Load the long files only for the section you need.
+
+**Last updated:** 2026-10-27 12:55 (interview page; site screens smaller, no screenshot above Launch; transcript skips the user-excluded prompt)
+
+## What Semester is
+Android app (Kotlin, Compose), fully on-device, no AI. Tabs: **Timetable** (courses, choices, week, results, attendance),
+**Focus** (session, blocker, class focus, DND, Shorts, limits, insights), **Planner** (review, day plan, tasks, deadlines, week).
+**A** PDF / CSV / paste → review → MUST + ranked WANT → top-3 clash-free timetables or a conflict → &quot;Use this timetable&quot; → calendar.
+**B** blocking, Pomodoro, strict mode, auto focus in classes, DND, Shorts/Reels, daily limits, usage insights, streaks.
+**C** nightly prompt → auto-fill gaps → confirm → calendar + focus + reminders + wake-up alarm; review, templates.
+Later (V2, not in V1): Nova voice control (step 13).
+
+## Invariants (SPEC §1.3)
+On-device only (no INTERNET, checked on every build) · parsed data used only after review (INV-2) · app touches only its own
+events/alarms (INV-3) · never block phone/SMS/emergency/maps/clock/calendar/Settings/keyboard (INV-4, D-15) · determini
+… (6720 more characters)</pre></details><div class=tool><span class=tn>Bash</span> Locate scheduler decisions, spec sections and source files<pre>grep -n &quot;D-14&quot; Insights.md | head; grep -n &quot;^#&quot; SPEC.md | head -60; find android -path &#x27;*scheduler*&#x27; -name &#x27;*.kt&#x27; -not -path &#x27;*/build/*&#x27; | head -30</pre></div><details class='out'><summary>output</summary><pre>24:**D-14: Scheduler contract clarifications (Claude, 2026-10-22; user may override).** SPEC §7.1–7.4 left gaps; filled as:
+42:toward the daily maximum and the task&#x27;s remaining time; meals use `[first, last)` like lunch (D-14); the plan carries meal and
+361:| 2026-10-22 | Step 2 ✅: scheduler (options/link groups, 5-min bitmask clashes, minimal MUST conflict, branch and bound, maximal top K, skip texts). SPEC §7 clarified via D-14 (a–f). I-03. |
+1:# SPEC.md: Semester, a course timetable + focus + daily planner app for Android
+17:## 1. Scope
+19:### 1.1 In scope (V1)
+28:### 1.2 Out of scope (V1)
+32:### 1.3 Core invariants (must hold in every version; each has tests)
+46:## 2. Glossary
+65:## 3. Repository layout (target)
+85:## 4. Requirements and acceptance tests
+89:### 4.A Timetable builder
+116:### 4.B Focus
+131:### 4.C Daily planner
+149:### 4.D Extras
+155:### 4.N Non-functional
+172:## 5. Data contracts (`core/model`, Kotlin)
+206:## 6. Parser contract (`core/parser`)
+207:### 6.1 Pipeline
+211:### 6.2 University profile
+215:### 6.3 Day forms (case-insensitive; separators `, / space &amp;`)
+224:### 6.4 Time forms
+229:### 6.6 Details (D-18)
+236:### 6.5 Scoring
+241:## 7. Scheduler contract (`core/scheduler`)
+242:### 7.1 Options
+249:### 7.2 Clash test
+253:### 7.3 Search
+270:### 7.4 Ranking key (compared in order)
+279:## 8. Planner contract (`core/planner`)
+280:### 8.1 Planning day
+282:### 8.2 Auto-fill
+295:### 8.3 Invariants (property-tested)
+302:## 9. Platform contracts (`platform/`)
+317:
+… (996 more characters)</pre></details><div class=tool><span class=tn>Bash</span> Read scheduler spec section and D-14 decision<pre>sed -n 241,278p SPEC.md; sed -n 24,32p Insights.md; wc -l android/core/scheduler/src/main/kotlin/com/semester/core/scheduler/*.kt</pre></div><details class='out'><summary>output</summary><pre>## 7. Scheduler contract (`core/scheduler`)
+### 7.1 Options
+Per course: each section alone, or each allowed combination of linked LEC/LAB/TUT sections (`linkGroup`). Locked course → its section only.
+Exact rule (D-14): sections are grouped by `linkGroup` (all `null` sections form one group). A section&#x27;s kinds = the kinds of its meetings;
+a group&#x27;s required kinds = the union over its sections. An option = a set of sections from **one** group whose kinds cover the required
+kinds exactly once each (so full LEC+LAB sections stand alone, and LEC-only + LAB-only sections pair up: A13). Sections with no meetings
+are never options. An option whose own meetings clash is dropped. A locked section → only the options that contain it. Options are
+ordered by their sorted section labels (INV-5).
+### 7.2 Clash test
+Each option → 7 day bitmasks of 5-minute slots (288 bits = 5 `Long`s). Start rounded down, end rounded up to the 5-min grid; plus
+`walkBufferMin` after each meeting (cut at 24:00). Clash = any AND ≠ 0. The walking buffer is therefore **hard**, unlike the other A11
+preferences (D-14).
+### 7.3 Search
+1. MUST courses first, fewest options first; backtracking. If none fit → find a **minimal conflicting set** by deletion
+   (drop each MUST in turn; keep it out only if the rest still fail) → `Infeasible(conflict, explanation)` with the clashing day/times.
+2. Then the search (D-14): depth-first over all chosen courses in course-code order, each course&#x27;s options in ID order, a WANT&#x27;s
+   &quot;
+… (3264 more characters)</pre></details><div class=tool><span class=tn>Bash</span> Read scheduler implementation<pre>cat android/core/scheduler/src/main/kotlin/com/semester/core/scheduler/Scheduler.kt</pre></div><details class='out'><summary>output</summary><pre>package com.semester.core.scheduler
+
+import com.semester.core.model.Choice
+import com.semester.core.model.Course
+import com.semester.core.model.ScheduleRequest
+import com.semester.core.model.ScheduleResult
+import com.semester.core.model.Skip
+import com.semester.core.model.Timetable
+import com.semester.core.model.mustCodes
+import com.semester.core.model.label
+import com.semester.core.model.wantOrder
+
+/**
+ * Courses + MUST/WANT choices → the best K clash-free timetables, or `Infeasible` with a reason (SPEC §7, A07–A13).
+ * Pure and deterministic (INV-5) unless the time cap (N01) cuts the search, which is then reported as `partial`.
+ */
+class Scheduler(
+    private val capMillis: Long = 3_000,
+    private val nanoTime: () -&gt; Long = System::nanoTime,
+    /** How many search nodes between clock readings. */
+    private val checkEvery: Long = 1024,
+) {
+    fun schedule(req: ScheduleRequest): ScheduleResult = Run(req).solve()
+
+    private inner class Run(private val req: ScheduleRequest) {
+        private val prefs = req.prefs
+        private val byCode: Map&lt;String, Course&gt; = req.courses.associateBy { it.code }
+        private val options: Map&lt;String, List&lt;Opt&gt;&gt; = byCode.mapValues { (code, c) -&gt; optionsOf(c, req.locked[code], prefs.walkBufferMin) }
+        private val musts = req.choices.mustCodes().filter { it in byCode }
+        private val wants = req.choices.wantOrder().filter { it in byCode }
+        private val wantRank = wants.associateWith { (req.choices[it] as Choice.Want).
+… (9537 more characters)</pre></details><div class=md><b>Short version:</b> an exact search, not a heuristic and not AI. It uses backtracking with branch-and-bound, and checks clashes with bitmasks. It&#x27;s guaranteed to find the best timetables under the ranking rules below, unless it hits the 3-second time cap. The code is in <code>android/core/scheduler/.../Scheduler.kt</code> and the contract is in SPEC §7.<br><br><b class=h>Example input</b><br>6 courses: <b>MUST</b> CS201 and MA101; <b>WANT 1</b> PH101, <b>WANT 2</b> EE110, <b>WANT 3</b> BIO1; plus one course you didn&#x27;t choose, which is ignored.<br><br><b class=h>Step 1: Turn each course into &quot;options&quot; (<code>Options.kt</code>)</b><br>- An option is one way to take the course: one section (e.g. <code>CS201-A</code>), or a lecture + lab + tutorial combination from the same link group (e.g. <code>PH101-L1 + PH101-P2</code>).<br>- If an option clashes with itself, it&#x27;s dropped. If you locked a section, only options containing that section are kept.<br><br><b class=h>Step 2: Represent time as bitmasks (fast clash checks)</b><br>- Each option becomes a week of 7 days × 288 five-minute slots, stored as bits. Start times round down and end times round up. If you set a walking buffer, it is added after each class.<br>- Two options clash exactly when their masks share a bit (AND ≠ 0). That makes a clash check a few machine instructions, with no time comparisons.<br><br><b class=h>Step 3: Check that the MUSTs fit</b><br>- If the MUST credits alone are over the maximum, the result is <code>Infeasible</code> right away.<br>- Otherwise it backtracks over the MUSTs only, starting with the course that has the fewest options (&quot;fail first&quot;): pick an option, mark its bits, recurse, and undo if it gets stuck.<br>- If the MUSTs can&#x27;t all fit, it finds a <b>minimal conflicting set</b>: it drops each MUST in turn and leaves it out if the rest still fail. What remains is the real core of the conflict, and you get a message like:<br>  <code>&quot;CS201 and MA101 can&#x27;t both fit: CS201-A Mon 09:00–10:30 clashes with MA101-A Mon 10:00–11:00&quot;</code>.<br><br><b class=h>Step 4: Main search, depth-first with branch-and-bound</b><br>It walks through all chosen courses in course-code order. For each course it tries every option that doesn&#x27;t clash with what&#x27;s already placed. For a WANT it also tries <b>skipping</b> it, as the last choice. The 3 best timetables found so far are kept.<br><br><b>Ranking (§7.4), compared in this order:</b><br>1. <b>Which WANTs are included, compared by rank (lexicographic).</b> Rank 1 included beats *any* timetable without it, even one with ranks 2, 3, 4 and 5. Priorities aren&#x27;t weights that add up; a higher priority strictly dominates all lower ones.<br>2. <b>Soft penalty, lower is better:</b><br>   - +10 per class before your earliest time<br>   - +20 per class on a day you wanted free<br>   - +1 per full 10 minutes of gap beyond your maximum gap<br>   - +5 per class overlapping lunch<br>3. <b>Tie-break by section IDs</b>, so the result is always the same (deterministic).<br><br><b>Pruning (the &quot;bound&quot;):</b> at any point in the search, the best case below that point is &quot;every undecided WANT gets in, and the penalty doesn&#x27;t grow&quot; (penalties only ever go up). If the current 3rd-best timetable is already at least that good, the whole branch is cut. Because the search visits branches in tie-break order, ties get cut too. That&#x27;s why 10 courses × 5 sections takes at most about 9 ms instead of up to 5¹⁰ leaves.<br><br><b>Credit limits</b> are checked at every step. A course that would go over the maximum is only tried as &quot;skip&quot;.<br><br><b class=h>Step 5: Keep only &quot;maximal&quot; timetables, and explain the skips</b><br>- A finished timetable is accepted only if every WANT it skipped *could not* have been added (every option clashes, or it would exceed the credit maximum). You never get &quot;the same timetable minus a course that fits&quot;.<br>- Each skip gets a reason, e.g. <code>&quot;WANT 3 BIO1 skipped: clashes with CS201-A (Tue 09:00–11:30)&quot;</code> or <code>&quot;WANT 2 EE110 skipped: would make 23 credits, over the 20 maximum&quot;</code>.<br>- If no timetable reaches the minimum credits, you get <code>&quot;No clash-free timetable reaches 16 credits (best: 14)&quot;</code>.<br>- If the 3-second cap is hit, it returns the best timetables found so far, marked <code>partial</code>.<br><br><b class=h>Things to know</b><br>- <b>The worst case is still exponential</b> (the product of all option counts), but with this pruning and real course sizes it runs in milliseconds.<br>- <b>The strict priority order is a design choice</b> (D-14 / §7.4, which I chose and you can override). Ranks are never traded for preferences: a timetable with WANT 1 and lots of 8 am classes still beats one without WANT 1 and a perfect schedule. If you&#x27;d prefer weighted priorities, so that e.g. WANT 2 + WANT 3 can beat WANT 1 alone, that&#x27;s a spec change I can make.</div></div></details></section>
+<section class=turn id='t46'><div class=th><b>Turn 46</b><span>27 Oct 14:48</span></div><div class=prompt>add this explanation to the interview prep page</div><details class=resp><summary>Response · 5 tool calls</summary><div class=rb><div class=tool><span class=tn>Bash</span> Inspect interview page structure and publish script<pre>ls site; wc -l site/interview.html; grep -n &quot;&lt;h2\|&lt;h3\|&lt;section\|class=\&quot;&quot; site/interview.html | head -80; cat scripts/publish_site.sh | head -40</pre></div><details class='out'><summary>output</summary><pre>README.md
+index.html
+interview.html
+shots
+transcript.html
+278 site/interview.html
+43:  &lt;span class=&quot;tag&quot;&gt;Project 2 · interview preparation&lt;/span&gt;
+45:  &lt;p class=&quot;lead&quot;&gt;What to say about Semester, the on-device Android timetable, focus and planner app: a two-minute pitch, the demo
+47:  &lt;div class=&quot;btns&quot;&gt;
+48:    &lt;a class=&quot;btn p&quot; href=&quot;index.html&quot;&gt;Project site&lt;/a&gt;
+49:    &lt;a class=&quot;btn&quot; href=&quot;transcript.html&quot;&gt;Build transcript&lt;/a&gt;
+50:    &lt;button class=&quot;btn&quot; id=&quot;toggle&quot; type=&quot;button&quot;&gt;Open all answers&lt;/button&gt;
+52:  &lt;nav class=&quot;toc&quot;&gt;
+59:&lt;h2 id=&quot;pitch&quot;&gt;Two-minute pitch&lt;/h2&gt;
+60:&lt;div class=&quot;card&quot;&gt;
+77:&lt;h2 id=&quot;demo&quot;&gt;Demo route (about 4 minutes)&lt;/h2&gt;
+78:&lt;div class=&quot;card&quot;&gt;
+90:  &lt;p class=&quot;hint&quot;&gt;In the browser (Appetize), blocking, DND, alarms and calendar writing can&#x27;t be fully granted, so describe the real-phone results from the Numbers section.&lt;/p&gt;
+93:&lt;h2 id=&quot;numbers&quot;&gt;Numbers to remember&lt;/h2&gt;
+94:&lt;div class=&quot;nums&quot;&gt;
+95:  &lt;div class=&quot;num&quot;&gt;&lt;b&gt;6 ms&lt;/b&gt;&lt;span&gt;scheduler, 10 courses × 5 options, on the phone (target ≤ 1 s)&lt;/span&gt;&lt;/div&gt;
+96:  &lt;div class=&quot;num&quot;&gt;&lt;b&gt;~200 ms&lt;/b&gt;&lt;span&gt;a blocked app is closed (B01 target ≤ 1 s)&lt;/span&gt;&lt;/div&gt;
+97:  &lt;div class=&quot;num&quot;&gt;&lt;b&gt;~3 s&lt;/b&gt;&lt;span&gt;30-page PDF import (N02 target ≤ 5 s)&lt;/span&gt;&lt;/div&gt;
+98:  &lt;div class=&quot;num&quot;&gt;&lt;b&gt;8.3 MB&lt;/b&gt;&lt;span&gt;release APK (N03 target ≤ 20 MB)&lt;/span&gt;&lt;/div&gt;
+99:  &lt;div class=&quot;num&quot;&gt;&lt;b&gt;164 + 52&lt;/b&gt;&lt;span&gt;JVM + instrumented tests, all passing&lt;/span&gt;&lt;/div&gt;
+100:  &lt;div class=&quot;num&quot;&gt;&lt;b&gt;600&lt;/b&gt;&lt;span&gt;random scheduler cases checked against a brute-force top-K (also
+… (1396 more characters)</pre></details><div class=tool><span class=tn>Read</span> /home/krishnag/Semester/site/interview.html</div><details class='out'><summary>output</summary><pre>1	&lt;!doctype html&gt;
+2	&lt;html lang=&quot;en&quot;&gt;
+3	&lt;head&gt;
+4	&lt;meta charset=&quot;utf-8&quot;&gt;
+5	&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;
+6	&lt;title&gt;Semester Interview Prep&lt;/title&gt;
+7	&lt;meta name=&quot;description&quot; content=&quot;Interview preparation for the Semester Android project: pitch, demo script, numbers, and likely questions with answers.&quot;&gt;
+8	&lt;style&gt;
+9	:root{--bg:#f8f8fc;--card:#fff;--ink:#1b1b24;--mute:#5d6070;--line:#e0e2ec;--acc:#3f51b5;--acc2:#e8eaf6;--onacc:#fff}
+10	@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#121218;--card:#1c1c25;--ink:#e6e6ee;--mute:#a2a5b5;--line:#30323f;--acc:#a8b1ff;--acc2:#262a4a;--onacc:#12153a}}
+11	:root[data-theme=dark]{--bg:#121218;--card:#1c1c25;--ink:#e6e6ee;--mute:#a2a5b5;--line:#30323f;--acc:#a8b1ff;--acc2:#262a4a;--onacc:#12153a}
+12	*{box-sizing:border-box}
+13	body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,-apple-system,&quot;Segoe UI&quot;,Roboto,sans-serif}
+14	main{max-width:880px;margin:0 auto;padding:0 16px 64px}
+15	header{padding:48px 0 16px}
+16	.tag{display:inline-block;background:var(--acc2);color:var(--acc);border-radius:999px;padding:2px 12px;font-size:13px;font-weight:600}
+17	h1{font-size:clamp(30px,6vw,44px);line-height:1.1;margin:12px 0 8px}
+18	.lead{font-size:18px;color:var(--mute);margin:0 0 20px}
+19	.btns{display:flex;flex-wrap:wrap;gap:10px}
+20	.btn{display:inline-flex;align-items:center;padding:8px 16px;border-radius:999px;text-decoration:none;font-weight:600;border:1px solid var(
+… (21762 more characters)</pre></details><div class=tool><span class=tn>Edit</span> /home/krishnag/Semester/site/interview.html<pre>- &lt;details&gt;&lt;summary&gt;How does the scheduler work?&lt;/summary&gt;&lt;div&gt;
+  &lt;p&gt;Each course has options: a single section, or a linked set of lecture, lab and tutorial sections that covers each required
+    kind exactly once. Each option becomes 7 day bitmasks of 5-minute slots (288 bits = 5 &lt;code&gt;Long&lt;/code&gt;s), so the clash test
+    is a bitwise AND. The search places the MUST courses first, fewest options first, with backtracking. Then it does a
+    depth-first branch-and-bound over all chosen courses, where each WANT course is either placed or skipped with a reason. It
+    keeps the best K distinct timetables under a ranking key and returns only maximal timetables: a WANT course is skipped only
+    if it really cannot be added.&lt;/p&gt;&lt;/div&gt;&lt;/details&gt;
+&lt;details&gt;&lt;summary&gt;What is the ranking key?&lt;/summar
+… (4998 more characters)</pre></div><div class=tool><span class=tn>Edit</span> /home/krishnag/Semester/site/interview.html<pre>-   &lt;p&gt;The scheduler finds a &lt;b&gt;minimal conflicting set&lt;/b&gt; by deletion: it drops each MUST course in turn and keeps it out only if
++   &lt;p&gt;The scheduler finds a &lt;b&gt;minimal conflicting set&lt;/b&gt; by deletion: it drops each MUST course in turn and leaves it out if</pre></div><details class='out'><summary>output</summary><pre>The file /home/krishnag/Semester/site/interview.html has been updated successfully. (file state is current in your context — no need to Read it back)</pre></details><details class='out'><summary>output</summary><pre>The file /home/krishnag/Semester/site/interview.html has been updated successfully. (file state is current in your context — no need to Read it back)</pre></details><div class=md>Now the project bookkeeping: an Insights log line, Status, commit, then publish.</div><div class=tool><span class=tn>Bash</span> Check Insights log format, transcript script, recent commits<pre>grep -n &quot;I-25&quot; Insights.md | head; tail -5 Insights.md; sed -n 1,30p scripts/transcript_html.py | head -30; git log -3 --stat --format=&#x27;%h %s&#x27; | head -30</pre></div><details class='out'><summary>output</summary><pre>352:**I-25: Interview-prep page (2026-10-27, 12:30).** The professor asked for three Project 2 URLs: deployed site, chat transcript HTML and interview-preparation HTML. The third did not exist → `site/interview.html` (pitch, demo route, numbers, ~30 likely questions with collapsible answers drawn from SPEC §1, §7–§9 and D-xx / I-xx), linked from the site header, published with `scripts/publish_site.sh`. Then, at the user&#x27;s request: the Screens section is smaller (150 px) and moved below &quot;How it was built&quot;, the timetable screenshot above the Launch button is gone (the link stays), and `transcript_html.py` has a `SKIP` list of prompt starts left out of the transcript with their response (that request itself).
+385:| 2026-10-27 | Interview-preparation page on the public site for the Project 2 form. N11, I-25. |
+| 2026-10-26 | Final demo dry run on the phone (I-21 build): every step passed, phone reset to demo state. I-22. |
+| 2026-10-26 | UI refinement from `UI_improvement`: shared tokens and components, Results answer first, Focus and Planner local tabs, Planner settings screen, visible Move up/down, stable course colours. N10, D-24, I-23. |
+| 2026-10-26 | Course submission: public site + signed APK release, Try sample courses, transcript page from all sessions. N11, D-25, I-24. |
+| 2026-10-27 | Appetize browser demo of the release APK linked from the public site (free plan blocks embeds). N11, I-24. |
+| 2026-10-27 | Interview-preparation page on the public site for the Project 
+… (2794 more characters)</pre></details></div></details></section>
 </main><script>
 const q=document.getElementById('q');q.addEventListener('input',()=>{const t=q.value.toLowerCase();
 document.querySelectorAll('.turn').forEach(e=>e.classList.toggle('hide',t&&!e.textContent.toLowerCase().includes(t)))});
