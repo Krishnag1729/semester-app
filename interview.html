@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Semester Interview Prep</title>
+<meta name="description" content="Interview preparation for the Semester Android project: pitch, demo script, numbers, and likely questions with answers.">
+<style>
+:root{--bg:#f8f8fc;--card:#fff;--ink:#1b1b24;--mute:#5d6070;--line:#e0e2ec;--acc:#3f51b5;--acc2:#e8eaf6;--onacc:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#121218;--card:#1c1c25;--ink:#e6e6ee;--mute:#a2a5b5;--line:#30323f;--acc:#a8b1ff;--acc2:#262a4a;--onacc:#12153a}}
+:root[data-theme=dark]{--bg:#121218;--card:#1c1c25;--ink:#e6e6ee;--mute:#a2a5b5;--line:#30323f;--acc:#a8b1ff;--acc2:#262a4a;--onacc:#12153a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:880px;margin:0 auto;padding:0 16px 64px}
+header{padding:48px 0 16px}
+.tag{display:inline-block;background:var(--acc2);color:var(--acc);border-radius:999px;padding:2px 12px;font-size:13px;font-weight:600}
+h1{font-size:clamp(30px,6vw,44px);line-height:1.1;margin:12px 0 8px}
+.lead{font-size:18px;color:var(--mute);margin:0 0 20px}
+.btns{display:flex;flex-wrap:wrap;gap:10px}
+.btn{display:inline-flex;align-items:center;padding:8px 16px;border-radius:999px;text-decoration:none;font-weight:600;border:1px solid var(--acc);color:var(--acc);background:none;font:inherit;font-weight:600;cursor:pointer}
+.btn.p{background:var(--acc);color:var(--onacc)}
+nav.toc{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:15px;margin:20px 0 0}
+h2{font-size:24px;margin:44px 0 12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin:0 0 12px}
+.card p:first-child{margin-top:0}.card p:last-child{margin-bottom:0}
+.nums{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+.num{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}
+.num b{display:block;font-size:22px;color:var(--acc)}.num span{font-size:14px;color:var(--mute)}
+details{background:var(--card);border:1px solid var(--line);border-radius:12px;margin:0 0 8px}
+summary{cursor:pointer;padding:12px 16px;font-weight:600;list-style-position:outside;margin-left:16px}
+details>div{padding:0 16px 14px;border-top:1px solid var(--line)}
+details>div p{margin:12px 0 0}
+ol,ul{padding-left:22px}li{margin:0 0 6px}
+code{background:var(--acc2);padding:1px 5px;border-radius:4px;font-size:14px}
+.hint{color:var(--mute);font-size:14px}
+footer{margin-top:56px;color:var(--mute);font-size:14px;border-top:1px solid var(--line);padding-top:16px}
+a{color:var(--acc)}
+</style>
+</head>
+<body>
+<main>
+<header>
+  <span class="tag">Project 2 · interview preparation</span>
+  <h1>Semester: interview prep</h1>
+  <p class="lead">What to say about Semester, the on-device Android timetable, focus and planner app: a two-minute pitch, the demo
+    route, the numbers worth remembering, and the questions an examiner is likely to ask, with answers taken from the spec and test log.</p>
+  <div class="btns">
+    <a class="btn p" href="index.html">Project site</a>
+    <a class="btn" href="transcript.html">Build transcript</a>
+    <button class="btn" id="toggle" type="button">Open all answers</button>
+  </div>
+  <nav class="toc">
+    <a href="#pitch">Pitch</a><a href="#demo">Demo route</a><a href="#numbers">Numbers</a><a href="#product">Product</a>
+    <a href="#arch">Architecture</a><a href="#algo">Algorithms</a><a href="#android">Android</a><a href="#testing">Testing</a>
+    <a href="#ai">Working with Claude</a><a href="#limits">Limits and next steps</a>
+  </nav>
+</header>
+
+<h2 id="pitch">Two-minute pitch</h2>
+<div class="card">
+  <p><b>Problem.</b> At the start of every semester, students build their timetables by hand from a long PDF. They try section
+    combinations until nothing clashes, then try to stay focused through classes and plan study time around them. Three separate
+    apps cover these jobs badly, and none of them knows the class timetable.</p>
+  <p><b>What Semester does.</b> You import the course schedule (PDF, CSV or pasted text), check it on a review screen, and mark the
+    courses you must take and the ones you want, in ranked order. A branch-and-bound scheduler returns the top three clash-free
+    timetables in milliseconds. If the courses cannot fit, it names the smallest set of MUST courses that clash, and when.
+    One tap writes the classes to the calendar. The timetable then drives two other features: focus mode blocks distracting apps
+    and turns on Do Not Disturb during every class, and the nightly planner fills tomorrow's free gaps with tasks.</p>
+  <p><b>How it is different.</b> Everything runs on the phone, with no AI, no account and no INTERNET permission, which every build
+    checks. The core is deterministic and tested against a brute-force oracle. Parsed data is never used until a person has
+    reviewed it.</p>
+  <p><b>How it was built.</b> I used Claude Code over six sessions with a spec-driven process. Every requirement has an ID and an
+    acceptance test, and every decision and measurement is logged. The project has 164 JVM tests and 52 instrumented tests, and
+    it was checked on my own Galaxy M15 running Android 15.</p>
+</div>
+
+<h2 id="demo">Demo route (about 4 minutes)</h2>
+<div class="card">
+  <ol>
+    <li><b>Timetable → Courses → Try sample courses.</b> The review screen opens. Point out that nothing is saved before
+      <b>Confirm</b> (INV-2, "never silently wrong").</li>
+    <li>Mark <code>CS201</code> and <code>MA202</code> as <b>Must take</b> and the rest as <b>Want</b>. <b>Choices</b> shows the ranking.</li>
+    <li><b>Week</b> shows every section, overlaps included. This is the problem the scheduler solves.</li>
+    <li><b>Results</b> shows the top 3 clash-free options. Open <b>Limits and preferences</b>, add a free day or "no classes before 9"
+      and watch the answer change. Lock a section. Open <b>Details</b> for the penalty and the build time in ms.</li>
+    <li>Make a clash on purpose (two MUSTs at the same time) to show the conflict sentence.</li>
+    <li><b>Use this timetable → Add to calendar.</b> Then <b>Focus</b> (Session / Apps / Insights) and <b>Planner</b>: add a task and
+      tap <b>Auto-fill</b>.</li>
+  </ol>
+  <p class="hint">In the browser (Appetize), blocking, DND, alarms and calendar writing can't be fully granted, so describe the real-phone results from the Numbers section.</p>
+</div>
+
+<h2 id="numbers">Numbers to remember</h2>
+<div class="nums">
+  <div class="num"><b>6 ms</b><span>scheduler, 10 courses × 5 options, on the phone (target ≤ 1 s)</span></div>
+  <div class="num"><b>~200 ms</b><span>a blocked app is closed (B01 target ≤ 1 s)</span></div>
+  <div class="num"><b>~3 s</b><span>30-page PDF import (N02 target ≤ 5 s)</span></div>
+  <div class="num"><b>8.3 MB</b><span>release APK (N03 target ≤ 20 MB)</span></div>
+  <div class="num"><b>164 + 52</b><span>JVM + instrumented tests, all passing</span></div>
+  <div class="num"><b>600</b><span>random scheduler cases checked against a brute-force top-K (also run once with 6 000)</span></div>
+  <div class="num"><b>0</b><span>network permissions (checked on every build)</span></div>
+  <div class="num"><b>6 sessions</b><span>with Claude Code, 22–26 Oct 2026, 43 turns</span></div>
+</div>
+
+<h2 id="product">Product and scope</h2>
+<details><summary>Why one app instead of three?</summary><div>
+  <p>The class timetable is the fixed skeleton of every day (decision D-01). If the planner knows the classes, it can find the real
+    free gaps. If focus mode knows them, it can start by itself at every class. Separate apps would need you to enter the
+    timetable three times.</p></div></details>
+<details><summary>Why no AI?</summary><div>
+  <p>Every part of the problem has an exact answer. Parsing is pattern matching on day and time forms, scheduling is a search
+    with hard constraints, and planning is gap filling with rules. Rules are predictable and testable, and they run offline. A
+    model could produce a timetable that clashes, or misread a time, and the student would only find out in week one (D-02).
+    The design deals with the hard part of parsing differently: a person reviews the parsed rows before anything uses them.</p></div></details>
+<details><summary>Why on-device only, with no INTERNET permission?</summary><div>
+  <p>Privacy, and it keeps working in airplane mode or on a bad campus network. The app reads usage stats and the calendar, and it
+    uses an accessibility service. That is sensitive access, and leaving out INTERNET guarantees that none of it can leave the
+    phone. <code>scripts/test.sh</code> fails the build if the permission ever appears (INV-1).</p></div></details>
+<details><summary>What are the core invariants?</summary><div>
+  <ul>
+    <li>INV-1 on-device only.</li>
+    <li>INV-2 parsed data is used only after review.</li>
+    <li>INV-3 the app changes only its own calendar events and alarms, each tagged with a stable key.</li>
+    <li>INV-4 the phone, SMS, emergency, maps, clock, calendar, Settings and the keyboard are never blocked.</li>
+    <li>INV-5 the scheduler and planner are deterministic.</li>
+    <li>INV-6 a timetable never has a clash and always includes every MUST course; otherwise the result is <code>Infeasible</code>
+      with an explanation.</li>
+  </ul></div></details>
+<details><summary>What is deliberately out of scope?</summary><div>
+  <p>OCR for scanned PDFs, any ML, accounts or cloud sync, iOS, exam timetables, Play Store policy work, and a voice assistant
+    ("Nova", planned for V2).</p></div></details>
+
+<h2 id="arch">Architecture</h2>
+<details><summary>How is the code organised?</summary><div>
+  <p>The project is a multi-module Gradle build. <code>core/model</code>, <code>core/parser</code>, <code>core/scheduler</code> and
+    <code>core/planner</code> are pure Kotlin with no Android dependency, so they run as fast JVM tests. <code>data</code> holds Room
+    (schema v10, with auto-migrations). <code>platform</code> holds the Android services: the focus service, the accessibility
+    blocker, the calendar writer, alarms and PDF text. <code>app</code> holds the Compose UI and the ViewModels.</p></div></details>
+<details><summary>Why keep the core pure Kotlin?</summary><div>
+  <p>The hardest logic (scheduler, planner, parser) is tested in milliseconds without an emulator, including property tests on
+    thousands of random inputs. It is deterministic because it takes the clock and the data as parameters. Android only appears at
+    the edges.</p></div></details>
+<details><summary>What is the tech stack?</summary><div>
+  <p>Kotlin 2.4, Jetpack Compose (Material 3), Room 2.8, AGP 9.4, minSdk 26, targetSdk 35 and compileSdk 37. compileSdk 37 is
+    there because the current AndroidX libraries require it (D-13). PdfBox-Android reads the PDF text. No navigation library and
+    no icon library, which helps keep the APK at 8 MB.</p></div></details>
+<details><summary>How does the app stay correct when Android kills background work?</summary><div>
+  <p>Whether to block an app is computed from the clock and the stored state at every window change (D-15b). Alarms and the
+    foreground service only drive the notification, DND and re-arming. A missed alarm or a killed service therefore cannot
+    wrongly block or unblock anything. Alarms are re-armed on boot, on a time or time zone change, and when the exact-alarm
+    permission is granted.</p></div></details>
+
+<h2 id="algo">Algorithms</h2>
+<details><summary>How does the scheduler work?</summary><div>
+  <p>Each course has options: a single section, or a linked set of lecture, lab and tutorial sections that covers each required
+    kind exactly once. Each option becomes 7 day bitmasks of 5-minute slots (288 bits = 5 <code>Long</code>s), so the clash test
+    is a bitwise AND. The search places the MUST courses first, fewest options first, with backtracking. Then it does a
+    depth-first branch-and-bound over all chosen courses, where each WANT course is either placed or skipped with a reason. It
+    keeps the best K distinct timetables under a ranking key and returns only maximal timetables: a WANT course is skipped only
+    if it really cannot be added.</p></div></details>
+<details><summary>What is the ranking key?</summary><div>
+  <p>Compared in order:</p>
+  <ol>
+    <li>The set of WANT courses included, compared by rank, so including WANT #1 beats any combination without it.</li>
+    <li>A soft penalty, lower is better: +10 per class before the earliest preferred time, +20 per class on a preferred free day,
+      +1 per 10 minutes of gap over the maximum, +5 per class during lunch.</li>
+    <li>A tie-break by section IDs in course-code order, for determinism.</li>
+  </ol></div></details>
+<details><summary>How do you explain an infeasible timetable?</summary><div>
+  <p>The scheduler finds a <b>minimal conflicting set</b> by deletion: it drops each MUST course in turn and keeps it out only if
+    the rest still fail. The output is a sentence such as "CS201 and MA101 can't both fit: CS201-A Mon 09:00–10:30 clashes with
+    MA101-A Mon 10:00–11:00". For three or more courses it says "can't all fit together, though any two of them can". Credit
+    limits get their own sentences.</p></div></details>
+<details><summary>What is the worst case and how did you bound it?</summary><div>
+  <p>The search is exponential in theory: 10 courses × 5 options is up to 5¹⁰ leaves. The first tie-break could not be bounded,
+    so when nothing clashed and there were no preferences, every leaf tied and the search hit the 3 s cap. Changing the
+    tie-break to section IDs in search order (D-14f) lets the search cut ties exactly, and that case now takes 0.6 ms. A hard
+    cap returns the best result so far, flagged <code>partial</code>.</p></div></details>
+<details><summary>How does the planner auto-fill work?</summary><div>
+  <p>The day window runs from wake time plus getting ready to wind-down. It excludes fixed blocks, meals and a 10-minute buffer
+    after each class, and what is left are the free gaps. Tasks are sorted by deadline, then priority, then ID. Each task is
+    placed in chunks of up to the work length in the earliest gap that fits, with breaks between them, until the daily focus
+    maximum is reached. Chunks shrink to fit the 30–45 minute gaps between classes (D-16). Anything that doesn't fit goes to
+    "didn't fit". The planning day rolls over at wake time, not midnight, which matters for late sleepers.</p></div></details>
+<details><summary>How does the PDF parser work?</summary><div>
+  <p>PdfBox reads the words and their positions. A university profile maps columns to fields. Day forms (Mon, M/W/F, MWF, TTh …)
+    and time forms (24h, am/pm, ranges) are handled by rules, and continuation lines add meetings or continue titles.
+    Low-confidence fields are highlighted on the review screen. A laptop tool scores the parser against an
+    <code>expected.json</code> golden file. The target is ≥ 95% of fields on a real university PDF, and that measurement is still
+    waiting for a real PDF.</p></div></details>
+
+<h2 id="android">Android platform</h2>
+<details><summary>How does app blocking work?</summary><div>
+  <p>An AccessibilityService watches window-state changes. If the app in front is blocked, the service sends the user Home and
+    shows an overlay message. The never-block list is checked first. Shorts and Reels are detected by view IDs kept in a
+    versioned rules file, because those IDs change with app updates.</p></div></details>
+<details><summary>What went wrong on the real phone that the emulator didn't show?</summary><div>
+  <p>Three good stories:</p>
+  <ul>
+    <li><b>Never-block was too generous (I-16).</b> "Apps that can dial" on a real phone included Truecaller, Zoom and WhatsApp, and
+      "apps that open maps" included Uber and Zomato, so none of them could be blocked. The fix (D-22) counts only system handlers
+      and the user's default apps for broad intents, and every handler for narrow categories such as Clock and Calendar.</li>
+    <li><b>DND came on 2 minutes late.</b> Without the exact-alarm permission, Android delays the class-start alarm. The app now
+      asks for exact alarms during setup (D-04).</li>
+    <li><b>The wake-up alarm screen never opened on a locked Android 15 phone (I-18).</b> Android 15 blocks background activity
+      launches. The alarm is now a broadcast that posts a full-screen-intent notification.</li>
+  </ul></div></details>
+<details><summary>How do you write to the calendar without touching the user's own events?</summary><div>
+  <p>The app writes to its own local calendar called "Semester". Every event carries a stable key in <code>SYNC_DATA1</code>
+    (<code>class:&lt;section&gt;:&lt;meeting&gt;</code>), so writing the same event again updates it instead of duplicating it,
+    and deleting goes by key only (INV-3). Each class meeting is one weekly recurring event with EXDATEs for holidays.
+    <code>.ics</code> export is also available.</p></div></details>
+<details><summary>How are permissions handled?</summary><div>
+  <p>Each permission is requested only when its feature is first switched on, with a plain reason, and refusing it leaves the
+    rest of the app working (N08). The exception is exact alarms, which the Focus setup card asks for because focus and DND
+    timing depend on them. Without that permission, the wake-up alarm falls back to the system Clock app.</p></div></details>
+<details><summary>Why is strict mode safe?</summary><div>
+  <p>Ending a session in strict mode needs a 60-second wait plus a typed sentence. Settings, the dialer and the keyboard are never
+    blocked, so the user can always reach Settings and turn the service off. A blocker that can lock you out of your own phone is
+    a bug.</p></div></details>
+
+<h2 id="testing">Testing and quality</h2>
+<details><summary>How did you test the scheduler?</summary><div>
+  <ul>
+    <li>Unit tests named by requirement ID (<code>A07_…</code>).</li>
+    <li>A property test: 600 random requests (fixed seed) compared exactly with an independent brute-force top-K. This check caught
+      a real bug before commit, a credit-minimum bound that ignored unplaced MUST credits.</li>
+    <li>INV-6 tests that no output clashes and every output includes all MUSTs.</li>
+    <li>INV-5 tests that the same input gives the same output, even with the course order shuffled.</li>
+  </ul></div></details>
+<details><summary>What is spec-driven development here?</summary><div>
+  <p><code>SPEC.md</code> holds the requirements with IDs and acceptance tests, the data and algorithm contracts, and the roadmap.
+    Behaviour changes only after the spec changes. <code>Insights.md</code> logs decisions (D-xx) and measured findings (I-xx).
+    <code>Status.md</code> is a ≤ 90-line snapshot that each new session reads first. A roadmap step is done only when its
+    acceptance tests pass.</p></div></details>
+<details><summary>What can't be tested automatically?</summary><div>
+  <p>A real incoming call during focus, a reboot with a PIN lock, a 3-day battery run (target ≤ 2% per day), a full planned day, and
+    Google Calendar importing the .ics file. These are listed as phone gates, not claimed as done.</p></div></details>
+
+<h2 id="ai">Working with Claude Code</h2>
+<details><summary>What did you do, and what did the AI do?</summary><div>
+  <p>I set the idea and the constraints: one app, no AI, on-device. I made the product decisions (D-01 to D-04, D-25), ran the
+    phone checks and reviewed the work. Claude Code wrote most of the code and tests and proposed the detailed rules, which are
+    logged as decisions I can override (D-14 to D-24). The spec, the tests and the logs are how I kept control, and the full
+    conversation is in the transcript.</p></div></details>
+<details><summary>How did you stop the AI from producing wrong code?</summary><div>
+  <ul>
+    <li>Every requirement has an acceptance test, and nothing counts as done until it passes.</li>
+    <li>Property tests against brute force for the scheduler and planner.</li>
+    <li>Build checks for INV-1, the SDK levels and the APK size.</li>
+    <li>Real-phone runs, which found three bugs the emulator could not show.</li>
+    <li>User gates: work stops when it needs a real PDF, the phone or a decision.</li>
+  </ul></div></details>
+<details><summary>How did you keep context across six sessions?</summary><div>
+  <p>Through <code>Status.md</code>, a short snapshot read at the start of every chat that points to the spec and log sections a
+    task needs. The long files are never read whole. <code>CLAUDE.md</code> holds the working rules.</p></div></details>
+
+<h2 id="limits">Limits and next steps</h2>
+<details><summary>What are the weaknesses?</summary><div>
+  <ul>
+    <li>The parser has only been scored on a synthetic sample, not on a real university PDF yet (the 95% target is still open).</li>
+    <li>The Shorts and Reels view IDs break when those apps update.</li>
+    <li>Samsung's battery management can still delay background work.</li>
+    <li>The soft-penalty weights are educated guesses.</li>
+    <li>The app is sideloaded, not on the Play Store (accessibility and usage-access policies would need extra work).</li>
+  </ul></div></details>
+<details><summary>What would you build next?</summary><div>
+  <p>Score the parser on real PDFs and add university profiles, run the 3-day battery test, let users tune the penalty weights,
+    and in V2 add Nova voice control. OCR for scanned PDFs would be the first thing to add if the no-AI rule were relaxed.</p></div></details>
+
+<footer>Semester · course project, October 2026 · <a href="index.html">project site</a> · <a href="transcript.html">build transcript</a></footer>
+</main>
+<script>
+const b=document.getElementById('toggle');
+b.addEventListener('click',()=>{const all=[...document.querySelectorAll('details')];const open=!all.every(d=>d.open);all.forEach(d=>d.open=open);b.textContent=open?'Close all answers':'Open all answers'});
+</script>
+</body>
+</html>

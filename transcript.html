@@ -20,7 +20,7 @@ details.out>summary{cursor:pointer;color:var(--mute);font-size:12.5px;margin-lef
 .hide{display:none}
 </style></head><body><main>
 <h1>Semester: build transcript</h1>
-<p class=sub>Claude Code sessions for the Semester Android app · 6 sessions · 43 turns · 22 Oct 2026 – 27 Oct 2026 (IST). Each turn is the user's prompt; click it to open Claude's response (text, tool calls and short tool output). Private reasoning and hidden system notes are not shown; emails and device identifiers are redacted.</p>
+<p class=sub>Claude Code sessions for the Semester Android app · 7 sessions · 44 turns · 22 Oct 2026 – 27 Oct 2026 (IST). Each turn is the user's prompt; click it to open Claude's response (text, tool calls and short tool output). Private reasoning and hidden system notes are not shown; emails and device identifiers are redacted.</p>
 <div class=bar><input id=q placeholder='Filter turns…' aria-label='Filter turns'><button id=ex>Expand all</button><button id=co>Collapse all</button></div><nav class=toc>
 <a href='#s1'>Session 1 · 22 Oct 15:26</a>
 <a href='#s2'>Session 2 · 23 Oct 01:20</a>
@@ -28,6 +28,7 @@ details.out>summary{cursor:pointer;color:var(--mute);font-size:12.5px;margin-lef
 <a href='#s4'>Session 4 · 26 Oct 11:22</a>
 <a href='#s5'>Session 5 · 26 Oct 11:48</a>
 <a href='#s6'>Session 6 · 26 Oct 22:47</a>
+<a href='#s7'>Session 7 · 27 Oct 12:28</a>
 </nav>
 <h2 id='s1'>Session 1 · Thu 22 Oct 2026, 15:26</h2>
 <section class=turn id='t1'><div class=th><b>Turn 1</b><span>22 Oct 15:26</span></div><div class=prompt>read SPEC.md and get started with App building.</div><details class=resp><summary>Response · 41 tool calls</summary><div class=rb><div class=tool><span class=tn>Bash</span> Read Status.md and list project files<pre>cat Status.md &amp;&amp; wc -l SPEC.md Insights.md PLAN.md &amp;&amp; ls -la</pre></div><details class='out'><summary>output</summary><pre># Status.md: Semester at a glance
@@ -12616,6 +12617,211 @@ bf6865b Step 14: course submission (N11, D-25, I-24)
 To https://github.com/Krishnag1729/Daily-Planner.git
    fdeab2a..c0bc106  master -&gt; master
 c0bc106 Site: name Appetize&#x27;s Tap to Start button</pre></details><div class=md>I pushed all 7 local commits to the private <code>Krishnag1729/Daily-Planner</code> repo on <code>master</code> (<code>fdeab2a..c0bc106</code>). The working tree is clean.<br><br>One commit in the private repo, <code>bf6865b</code>, contains the early transcript copy with the personal name I had guessed for the signing certificate. The repo is private, so only you can see it. The public site and its history are already clean.<br><br>The last step is still yours. At the end of this session, type <code>/export transcript.md</code> in the repo root and tell me. I&#x27;ll rebuild the transcript page and publish it to the website, then commit and push here as well.</div></div></details></section>
+<h2 id='s7'>Session 7 · Tue 27 Oct 2026, 12:28</h2>
+<section class=turn id='t44'><div class=th><b>Turn 44</b><span>27 Oct 12:28</span></div><div class=prompt>the prof is asking the projects HTMLs of Chats etc in this format. 
+
+
+Project 2 deployed URL
+(1 Point)
+
+Enter your answer
+5.Project 2 chat transcript HTML URL
+(1 Point)
+
+Enter your answer
+6.Project 2 interview preparation HTML URL
+(1 Point)</div><details class=resp><summary>Response · 11 tool calls</summary><div class=rb><div class=tool><span class=tn>Bash</span> Read project status file<pre>cat Status.md</pre></div><details class='out'><summary>output</summary><pre># Status.md: Semester at a glance
+
+&gt; **Read this first in every new chat.** ≤ 90 lines. Updated at the end of every chat and with every commit that changes progress.
+&gt; Details: `SPEC.md` (requirements A/B/C/D/N, contracts §5–§9, roadmap §12), `Insights.md` (D-xx decisions, I-xx findings, log).
+&gt; `PLAN.md` = original idea, never edited. Load the long files only for the section you need.
+
+**Last updated:** 2026-10-27 03:40 (transcript republished with the last sitting: 43 turns; submission ready)
+
+## What Semester is
+Android app (Kotlin, Compose), fully on-device, no AI. Tabs: **Timetable** (courses, choices, week, results, attendance),
+**Focus** (session, blocker, class focus, DND, Shorts, limits, insights), **Planner** (review, day plan, tasks, deadlines, week).
+**A** PDF / CSV / paste → review → MUST + ranked WANT → top-3 clash-free timetables or a conflict → &quot;Use this timetable&quot; → calendar.
+**B** blocking, Pomodoro, strict mode, auto focus in classes, DND, Shorts/Reels, daily limits, usage insights, streaks.
+**C** nightly prompt → auto-fill gaps → confirm → calendar + focus + reminders + wake-up alarm; review, templates.
+Later (V2, not in V1): Nova voice control (step 13).
+
+## Invariants (SPEC §1.3)
+On-device only (no INTERNET, checked on every build) · parsed data used only after review (INV-2) · app touches only its own
+events/alarms (INV-3) · never block phone/SMS/emergency/maps/clock/calendar/Settings/keyboard (INV-4, D-15) · deterministic core ·
+no clash, all MUSTs, or
+… (6521 more characters)</pre></details><div class=tool><span class=tn>Bash</span> List site files and search for interview prep<pre>ls site/ &amp;&amp; grep -ril &quot;interview&quot; site/ SPEC.md Insights.md scripts/ 2&gt;/dev/null | head; cd ~/.local/share/semester-app &amp;&amp; git log --oneline | head -3 &amp;&amp; ls</pre></div><details class='out'><summary>output</summary><pre>README.md
+index.html
+shots
+transcript.html
+3a739dd Transcript: last sitting (43 turns)
+693cf6b Demo steps: Tap to Start
+eea78b4 Browser demo: launch button (free plan blocks embeds)
+README.md
+index.html
+shots
+transcript.html
+Shell cwd was reset to /home/krishnag/Semester</pre></details><div class=tool><span class=tn>Bash</span> Check time, file sizes, publish script, headings<pre>date &amp;&amp; wc -l SPEC.md Insights.md site/index.html site/transcript.html &amp;&amp; cat scripts/publish_site.sh &amp;&amp; grep -n &quot;^#&quot; SPEC.md | head -60 &amp;&amp; grep -n &quot;^## \|^### &quot; Insights.md | head -80</pre></div><details class='out'><summary>output</summary><pre>Tue Oct 27 12:28:22 PM IST 2026
+    370 SPEC.md
+    382 Insights.md
+    114 site/index.html
+  12623 site/transcript.html
+  13489 total
+#!/usr/bin/env bash
+# N11 (a): rebuild the transcript page and push site/ to the public repo Krishnag1729/semester-app (GitHub Pages, branch main).
+# Usage: scripts/publish_site.sh [&quot;commit message&quot;]   (the source code itself is never copied there)
+set -euo pipefail
+ROOT=&quot;$(cd &quot;$(dirname &quot;$0&quot;)/..&quot; &amp;&amp; pwd)&quot;
+PUB=&quot;${SEMESTER_SITE_CHECKOUT:-$HOME/.local/share/semester-app}&quot;
+python3 &quot;$ROOT/scripts/transcript_html.py&quot; &quot;$ROOT/site/transcript.html&quot;
+[[ -f &quot;$ROOT/transcript.md&quot; ]] &amp;&amp; cp &quot;$ROOT/transcript.md&quot; &quot;$ROOT/site/transcript.md&quot;
+[[ -d &quot;$PUB/.git&quot; ]] || gh repo clone Krishnag1729/semester-app &quot;$PUB&quot;
+rsync -a --delete --exclude .git &quot;$ROOT/site/&quot; &quot;$PUB/&quot;
+cd &quot;$PUB&quot;
+git add -A
+git diff --cached --quiet &amp;&amp; { echo &quot;site unchanged&quot;; exit 0; }
+git commit -q -m &quot;${1:-Update site}&quot;
+git push -q origin HEAD:main
+echo &quot;pushed → https://krishnag1729.github.io/semester-app/&quot;
+1:# SPEC.md: Semester, a course timetable + focus + daily planner app for Android
+17:## 1. Scope
+19:### 1.1 In scope (V1)
+28:### 1.2 Out of scope (V1)
+32:### 1.3 Core invariants (must hold in every version; each has tests)
+46:## 2. Glossary
+65:## 3. Repository layout (target)
+85:## 4. Requirements and acceptance tests
+89:### 4.A Timetable builder
+116:### 4.B Focus
+131:### 4.C Daily planner
+149:### 4.D Extras
+155:### 4.N Non-functional
+172:## 5. Data contracts (`core/model`, Kotlin)
+206:## 6.
+… (804 more characters)</pre></details><div class=tool><span class=tn>Bash</span> Read SPEC scope, non-functional, contracts, risks<pre>sed -n 1,45p SPEC.md &amp;&amp; sed -n 155,171p SPEC.md &amp;&amp; sed -n 241,335p SPEC.md</pre></div><div class=tool><span class=tn>Bash</span> Read Insights decisions section<pre>sed -n 9,84p Insights.md</pre></div><div class=tool><span class=tn>Bash</span> Read site landing page<pre>cat site/index.html</pre></div><details class='out'><summary>output</summary><pre>## Decisions
+
+**D-01: One app, three parts (user, 2026-10-22).** Timetable builder + focus + daily planner in one app, not separate apps.
+Reason (user): the class timetable is the fixed skeleton of every day, so the planner can find free gaps and focus can follow classes.
+
+**D-02: No AI / ML in V1 (user, 2026-10-22).** Parsing by rules, scheduling by search, planning by rules. Scanned-PDF OCR out of V1.
+
+**D-03: On-device only (2026-10-22).** No `INTERNET` permission in V1 (SPEC INV-1).
+
+**D-13: Toolchain and package names (Claude, 2026-10-22).** AGP 9.4.1 (built-in Kotlin) · Gradle 9.8.0 · Kotlin 2.4.21 · KSP 2.3.12 ·
+Room 2.8.5 · Compose BOM 2026.09.00 · JDK 17. Packages `com.semester.{app,data,platform,core.*}`; applicationId `com.semester.app`.
+**compileSdk 37** (min 26 / target 35 unchanged, N05): the current AndroidX stack (core 1.19, Compose BOM 2026.09, activity 1.13,
+lifecycle 2.11) refuses to build against 36. Installed `platforms;android-37.0` into `~/.local/opt/android-sdk` (additive).
+Tab icons are 3 vector drawables, not `material-icons` (frozen library, adds size). Room schemas exported to `android/data/schemas/`.
+
+**D-14: Scheduler contract clarifications (Claude, 2026-10-22; user may override).** SPEC §7.1–7.4 left gaps; filled as:
+(a) linked options = exact cover of a link group&#x27;s kinds (§7.1); (b) walking buffer stays in the hard clash test (§7.2) although A11
+calls it soft: §7.2 is the precise contract, default is 0, and a soft version would need a new pen
+… (5822 more characters)</pre></details><details class='out'><summary>output</summary><pre>&lt;!doctype html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;
+&lt;title&gt;Semester for Android&lt;/title&gt;
+&lt;meta name=&quot;description&quot; content=&quot;Semester: a course timetable builder, focus mode and daily planner for Android. Runs fully on the phone, no AI, no internet.&quot;&gt;
+&lt;style&gt;
+:root{--bg:#f8f8fc;--card:#fff;--ink:#1b1b24;--mute:#5d6070;--line:#e0e2ec;--acc:#3f51b5;--acc2:#e8eaf6;--onacc:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#121218;--card:#1c1c25;--ink:#e6e6ee;--mute:#a2a5b5;--line:#30323f;--acc:#a8b1ff;--acc2:#262a4a;--onacc:#12153a}}
+:root[data-theme=dark]{--bg:#121218;--card:#1c1c25;--ink:#e6e6ee;--mute:#a2a5b5;--line:#30323f;--acc:#a8b1ff;--acc2:#262a4a;--onacc:#12153a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,-apple-system,&quot;Segoe UI&quot;,Roboto,sans-serif}
+main{max-width:1040px;margin:0 auto;padding:0 16px 64px}
+header{padding:48px 0 24px}
+.tag{display:inline-block;background:var(--acc2);color:var(--acc);border-radius:999px;padding:2px 12px;font-size:13px;font-weight:600}
+h1{font-size:clamp(32px,6vw,48px);line-height:1.1;margin:12px 0 8px}
+.lead{font-size:18px;color:var(--mute);max-width:680px;margin:0 0 20px}
+.btns{display:flex;flex-wrap:wrap;gap:10px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:999px;text-decoration:none;font-weight:600;border:1px solid var(--acc)}
+.btn.p{backgrou
+… (7948 more characters)</pre></details><details class='out'><summary>output</summary><pre># SPEC.md: Semester, a course timetable + focus + daily planner app for Android
+
+&gt; **Status:** Draft v0.1 (2026-10-22). Steps 0–2 ✅ (setup, model + manual entry + week grid, scheduler + results screen). Next: step 3 ⏸ (real PDFs).
+&gt; **Document system (spec-driven):**
+&gt; | File | Role | Who changes it |
+&gt; |---|---|---|
+&gt; | `PLAN.md` | Original idea / intent. **Frozen**: never edited. | nobody |
+&gt; | `SPEC.md` (this) | Requirements with IDs, acceptance tests, data + algorithm contracts, roadmap with status. **Code follows this file.** | updated *before* code changes behaviour |
+&gt; | `Insights.md` | Decisions (D-xx), findings + measurements (I-xx), change log. The long history lives here. | every change |
+&gt; | `Status.md` | **≤ 90-line snapshot** for starting a new chat cheaply. Read first, update at the end of every chat. | every chat |
+&gt; | `CLAUDE.md` | Short rules for Claude sessions (read Status.md first, don&#x27;t load long files unless needed). | rarely |
+&gt;
+&gt; **Legend:** ✅ done · 🔄 in progress · ⬜ not started · ⏸ **USER GATE** (needs the user: real PDFs, phone testing, a decision). Work stops at a gate.
+
+---
+
+## 1. Scope
+
+### 1.1 In scope (V1)
+- Android app (Kotlin, Jetpack Compose), single user, English UI.
+- **A. Timetable builder:** import a course-schedule PDF (text PDFs) / CSV / pasted text / manual entry → review → choose MUST + ranked WANT
+  courses → clash-free timetables (top K) or a conflict explanation → calendar events + wake-up alarm + `.ics` export.
+- **B. Focus:** a
+… (13117 more characters)</pre></details><div class=tool><span class=tn>Bash</span> List Insights findings headlines and open decisions<pre>grep -n &quot;^\*\*I-&quot; Insights.md | cut -c1-260 &amp;&amp; sed -n 85,117p Insights.md | cut -c1-250</pre></div><details class='out'><summary>output</summary><pre>119:**I-01: Step 0 build baseline (2026-10-22).** `scripts/test.sh` on the laptop (24 cores, JDK 17): `test assembleDebug` 18 s after
+123:**I-02: Step 1 data layer (2026-10-22).** Room v2 (course, section, meeting, choice; auto-migration from v1). JVM: 14 tests
+128:**I-03: Scheduler (step 2, 2026-10-22).** `core/scheduler`, 31 JVM tests pass. A08: 600 random requests (seed 8; 2–6 courses, 1–3
+134:**I-04: Step 1 UI (2026-10-22).** Timetable tab: Courses (search, MUST/WANT chip), course editor (sections, meetings, per-field
+143:**I-05: Results screen (A21, 2026-10-22).** Room v3 (`schedule_settings`, `lock`; auto-migration 2→3). `ResultsViewModel`
+152:**I-06: Focus steps 6–7 on the emulator (2026-10-22).** Room v4. JVM: `FocusEngineTest` 10 (Pomodoro phases, class periods,
+161:**I-07: Focus tab UI tests (2026-10-22).** `FocusViewModel` takes a clock (default real). `FocusScreenTest` 4/4 on the emulator,
+167:**I-08: Planner core (step 8, 2026-10-22).** `core/planner` 9 JVM tests: C02 planning-day examples; gaps = window − classes (+10 min
+173:**I-09: Calendar (step 5, 2026-10-22).** Room v5 (`semester`, `holiday`). Pure `ClassEvents` / `Ics` / `SemesterRules`: 5 JVM tests
+183:**I-10: Planner UI (step 9, 2026-10-22).** Room v6 (task, planner_prefs, study_session, plan_day, prompt_log). Pure: `PlannerTimes`
+194:**I-11: Parser + import (step 4, 2026-10-22).** `core/parser`: 31 day/time tests (every §6.3 / §6.4 form + the AM/PM rule + bad
+207:**I-12: Step 11 (2026-10-22).** Room v8 
+… (4721 more characters)</pre></details><div class=md>I&#x27;m writing the interview preparation page now, since only the site and transcript exist so far. The deadline is 14:00 and it&#x27;s 12:30.</div><div class=tool><span class=tn>Bash</span> Read key findings I-03, I-16, I-18<pre>sed -n 128,133p Insights.md &amp;&amp; sed -n 238,261p Insights.md | cut -c1-300 &amp;&amp; sed -n 269,275p Insights.md | cut -c1-300</pre></div><details class='out'><summary>output</summary><pre>**I-03: Scheduler (step 2, 2026-10-22).** `core/scheduler`, 31 JVM tests pass. A08: 600 random requests (seed 8; 2–6 courses, 1–3
+sections, off-grid times, random prefs/credits/K) match an independent brute-force top-K exactly (also run once with 6 000 cases:
+pass); INV-6 no clash + all MUSTs (seed 9); INV-5 same output twice and with shuffled course order. **N01 on the laptop JVM**
+(after warm-up): 20 random 10 × 5 requests median 0.8 ms, max 8.6 ms; all-fit tie worst case 0.6 ms (target ≤ 1 s). Phone timing
+not measured yet. Bug found by the brute-force check and fixed before commit: a creditMin bound ignored unplaced MUST credits.
+
+**I-16: First real phone (2026-10-23).** Galaxy M15 SM-E156B, Android 15 / API 35, One UI 7, arm64, 1080×2340 @ 450 dpi, patch
+2025-08, over an ssh-tunnelled adb (`ADB_SERVER_SOCKET=tcp:127.0.0.1:15040`; USB power flickers in the battery log, so the link
+drops; restart adb on the phone&#x27;s host). Debug APK installs. **B02 defect, emulator never showed it:** DIAL was answered by
+CallApp, Truecaller, Zoom; SENDTO by WhatsApp, Zoom; geo by Zomato, Uber, Ola, Rapido, Namma Yatri, Jugnoo, Zoom, so all were
+never-block. Narrow categories were clean (APP_MAPS: Google Maps; APP_MESSAGING: Google + Samsung Messages; SHOW_ALARMS: Samsung
+Clock; APP_CALENDAR: Google + Samsung Calendar), but Samsung Clock / Calendar are not FLAG_SYSTEM. Defaults: dialer
+`com.samsung.android.dialer`, SMS `com.samsung.android.messaging`, keyboard Honeyboard. Fixed per D-22, JVM
+… (2936 more characters)</pre></details><div class=tool><span class=tn>Write</span> /home/krishnag/Semester/site/interview.html<pre>&lt;!doctype html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;
+&lt;title&gt;Semester Interview Prep&lt;/title&gt;
+&lt;meta name=&quot;description&quot; content=&quot;Interview preparation for the Semester Android project: pitch, demo script, numbers, and likely questions with answers.&quot;&gt;
+&lt;style&gt;
+:root{--bg:#f8f8fc;--card:#fff;--ink:#1b1b24;--mute:#5d6070;--line:#e0e2ec;--acc:#3f51b5;--acc2:#e8eaf6;--onacc:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#121218;--card:#1c1c25;--ink:#e6e6ee;--mute:#a2a5b5;--line:#30323f;--acc:#a8b1ff;--acc2:#262a4a;--onacc:#12153a}}
+:root[data-theme=dark]{--bg:#121218;--card:#1c1c25;--ink:#e6e6ee;--mute:#a2a5b5;--line:#30323f;--acc:#a8b1ff;--acc2:#262a4a;--onacc:#12153a}
+*{box-sizing:border-box
+… (21455 more characters)</pre></div><details class='out'><summary>output</summary><pre>File created successfully at: /home/krishnag/Semester/site/interview.html (file state is current in your context — no need to Read it back)</pre></details><div class=tool><span class=tn>Bash</span> Link interview page from site and spec<pre>python3 - &lt;&lt;&#x27;EOF&#x27;
+import re,io
+p=&#x27;site/index.html&#x27;;s=open(p).read()
+s=s.replace(&#x27;&lt;a class=&quot;btn s&quot; href=&quot;transcript.html&quot;&gt;Build transcript&lt;/a&gt;\n&#x27;,&#x27;&lt;a class=&quot;btn s&quot; href=&quot;transcript.html&quot;&gt;Build transcript&lt;/a&gt;\n    &lt;a class=&quot;btn s&quot; href=&quot;interview.html&quot;&gt;Interview prep&lt;/a&gt;\n&#x27;,1)
+open(p,&#x27;w&#x27;).write(s)
+p=&#x27;SPEC.md&#x27;;s=open(p).read()
+s=s.replace(&#x27;a download link and the transcript page;&#x27;,&#x27;a download link, the transcript page and an interview-preparation page (`interview.html`);&#x27;,1)
+s=s.replace(&#x27;site and APK URLs answer 200;&#x27;,&#x27;site, interview and APK URLs answer 200;&#x27;,1)
+open(p,&#x27;w&#x27;).write(s)
+EOF
+grep -c interview.html site/index.html SPEC.md; grep -n &quot;I-24\|^- &quot; Insights.md | tail -5</pre></div><details class='out'><summary>output</summary><pre>SPEC.md:1
+site/index.html:1
+349:**I-24: Submission build (2026-10-26, 22:47–23:35).** N11: `scripts/test.sh` passes (164 JVM, INV-1, N05, release 8352 KB). `N11_sampleCourses_openInReview` passes on `nova_test` (14 rows, 0 refused, nothing saved); first try waited for `importRow.13`, which a LazyColumn never composes off screen, so the test now reads the review state. `A19A20TypeFiveCoursesTest` 2/2. `scripts/sign_release.sh`: zipalign + apksigner, `apksigner verify` passes, 8377 KB. The **minified signed release** (first time run; earlier phone work used debug) installed on the emulator: sample → review → confirm 6 courses → MUST/WANT → Results 3 options, 19 credits, Focus, Planner; no crash in `logcat -b crash`. Site live at https://krishnag1729.github.io/semester-app/ (index, transcript, screenshots 200; release APK 200, 8.2 MB). First Pages build errored (Jekyll) → `.nojekyll`. Transcript: 6 sessions, 38 turns, ~1.3 MB; the build stops if a token/key/serial is left. Pages checked in the emulator&#x27;s Chrome (turns collapse/expand, code readable). Appetize demo: the user uploaded the release APK on 2026-10-27 (public key `b_zbrm4cfghxzbvuh2vlhktpyx6e`, app and embed URLs 200). The embed shows &quot;The app owner must upgrade their plan to enable embeds&quot; (free plan, seen in the emulator&#x27;s Chrome), so the site links to the appetize.io app page with a Launch button instead of an iframe. Claude first signed with a guessed personal name in the certificate → key remade as `CN=Semester a
+… (492 more characters)</pre></details><div class=tool><span class=tn>Bash</span> Add I-25 finding and change-log line<pre>python3 - &lt;&lt;&#x27;EOF&#x27;
+p=&#x27;Insights.md&#x27;;s=open(p).read()
+i=s.index(&#x27;\n---&#x27;,s.index(&#x27;**I-24:&#x27;))
+s=s[:i]+&#x27;\n\n**I-25: Interview-prep page (2026-10-27, 12:30).** The professor asked for three Project 2 URLs: deployed site, chat transcript HTML and interview-preparation HTML. The third did not exist → `site/interview.html` (pitch, demo route, numbers, ~30 likely questions with collapsible answers drawn from SPEC §1, §7–§9 and D-xx / I-xx), linked from the site header, published with `scripts/publish_site.sh`.&#x27;+s[i:]
+s=s.rstrip(&#x27;\n&#x27;)+&#x27;\n| 2026-10-27 | Interview-preparation page on the public site for the Project 2 form. N11, I-25. |\n&#x27;
+open(p,&#x27;w&#x27;).write(s)
+EOF
+tail -3 Insights.md | cut -c1-120; grep -n &quot;I-25&quot; Insights.md | cut -c1-80</pre></div><details class='out'><summary>output</summary><pre>| 2026-10-26 | Course submission: public site + signed APK release, Try sample courses, transcript page from all session
+| 2026-10-27 | Appetize browser demo of the release APK linked from the public site (free plan blocks embeds). N11, I-24
+| 2026-10-27 | Interview-preparation page on the public site for the Project 2 form. N11, I-25. |
+352:**I-25: Interview-prep page (2026-10-27, 12:30).** The professor asked for t
+385:| 2026-10-27 | Interview-preparation page on the public site for the Project</pre></details></div></details></section>
 </main><script>
 const q=document.getElementById('q');q.addEventListener('input',()=>{const t=q.value.toLowerCase();
 document.querySelectorAll('.turn').forEach(e=>e.classList.toggle('hide',t&&!e.textContent.toLowerCase().includes(t)))});
